@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .hairline {
+        @apply bg-white/10;
+    }
+
+    .hairline-light {
+        @apply bg-slate-900/10;
+    }
+
+    .glass {
+        @apply bg-white/5 border border-white/10 shadow-sm;
+    }
+
+    .glass-light {
+        @apply bg-white/70 border border-slate-900/10 shadow-sm;
+    }
+
+    .chip {
+        @apply bg-white/5 border border-white/10;
+    }
+
+    .chip-light {
+        @apply bg-white/80 border border-slate-900/10;
+    }
+
+    .card {
+        @apply shadow-sm;
+    }
+}
