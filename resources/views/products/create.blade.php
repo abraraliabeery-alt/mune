@@ -13,8 +13,13 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
-                <label class="text-xs tracking-widest opacity-70">{{ __('messages.form_name') }}</label>
-                <input name="name" value="{{ old('name') }}" class="mt-1 w-full rounded-xl px-3 py-2 outline-none {{ $theme === 'dark' ? 'bg-white/5 border border-white/10 focus:border-white/20' : 'bg-white/70 border border-slate-900/10 focus:border-slate-900/20' }}" />
+                <label class="text-xs tracking-widest opacity-70">{{ __('messages.form_name_en') }}</label>
+                <input name="name_en" value="{{ old('name_en') }}" class="mt-1 w-full rounded-xl px-3 py-2 outline-none {{ $theme === 'dark' ? 'bg-white/5 border border-white/10 focus:border-white/20' : 'bg-white/70 border border-slate-900/10 focus:border-slate-900/20' }}" />
+            </div>
+
+            <div>
+                <label class="text-xs tracking-widest opacity-70">{{ __('messages.form_name_ar') }}</label>
+                <input name="name_ar" value="{{ old('name_ar') }}" class="mt-1 w-full rounded-xl px-3 py-2 outline-none {{ $theme === 'dark' ? 'bg-white/5 border border-white/10 focus:border-white/20' : 'bg-white/70 border border-slate-900/10 focus:border-slate-900/20' }}" />
             </div>
 
             <div>
@@ -44,8 +49,13 @@
             </div>
 
             <div class="lg:col-span-2">
-                <label class="text-xs tracking-widest opacity-70">{{ __('messages.form_description') }}</label>
-                <textarea name="description" class="mt-1 w-full rounded-xl px-3 py-2 outline-none {{ $theme === 'dark' ? 'bg-white/5 border border-white/10 focus:border-white/20' : 'bg-white/70 border border-slate-900/10 focus:border-slate-900/20' }}" rows="3">{{ old('description') }}</textarea>
+                <label class="text-xs tracking-widest opacity-70">{{ __('messages.form_description_en') }}</label>
+                <textarea name="description_en" class="mt-1 w-full rounded-xl px-3 py-2 outline-none {{ $theme === 'dark' ? 'bg-white/5 border border-white/10 focus:border-white/20' : 'bg-white/70 border border-slate-900/10 focus:border-slate-900/20' }}" rows="3">{{ old('description_en') }}</textarea>
+            </div>
+
+            <div class="lg:col-span-2">
+                <label class="text-xs tracking-widest opacity-70">{{ __('messages.form_description_ar') }}</label>
+                <textarea name="description_ar" class="mt-1 w-full rounded-xl px-3 py-2 outline-none {{ $theme === 'dark' ? 'bg-white/5 border border-white/10 focus:border-white/20' : 'bg-white/70 border border-slate-900/10 focus:border-slate-900/20' }}" rows="3">{{ old('description_ar') }}</textarea>
             </div>
         </div>
 

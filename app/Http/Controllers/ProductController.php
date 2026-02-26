@@ -44,10 +44,12 @@ class ProductController extends Controller
         //
 
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name_en' => ['required', 'string', 'max:255'],
+            'name_ar' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string', 'in:' . implode(',', self::CATEGORIES)],
             'price' => ['required', 'numeric', 'min:0'],
-            'description' => ['nullable', 'string'],
+            'description_en' => ['nullable', 'string'],
+            'description_ar' => ['nullable', 'string'],
             'image_url' => ['nullable', 'string', 'max:2048'],
             'image_file' => ['nullable', 'file', 'image', 'max:5120'],
             'is_available' => ['nullable'],
@@ -61,6 +63,9 @@ class ProductController extends Controller
         }
 
         unset($validated['image_file']);
+
+        $validated['name'] = (string) ($validated['name_en'] ?? '');
+        $validated['description'] = (string) ($validated['description_en'] ?? '');
 
         $product = Product::create($validated);
 
@@ -100,10 +105,12 @@ class ProductController extends Controller
         //
 
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name_en' => ['required', 'string', 'max:255'],
+            'name_ar' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string', 'in:' . implode(',', self::CATEGORIES)],
             'price' => ['required', 'numeric', 'min:0'],
-            'description' => ['nullable', 'string'],
+            'description_en' => ['nullable', 'string'],
+            'description_ar' => ['nullable', 'string'],
             'image_url' => ['nullable', 'string', 'max:2048'],
             'image_file' => ['nullable', 'file', 'image', 'max:5120'],
             'is_available' => ['nullable'],
@@ -121,6 +128,9 @@ class ProductController extends Controller
         }
 
         unset($validated['image_file']);
+
+        $validated['name'] = (string) ($validated['name_en'] ?? '');
+        $validated['description'] = (string) ($validated['description_en'] ?? '');
 
         $product->update($validated);
 

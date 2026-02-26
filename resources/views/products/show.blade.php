@@ -5,11 +5,13 @@
 
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-2xl font-semibold">{{ $product->name }}</h1>
+            <h1 class="text-2xl font-semibold">{{ $product->displayName() }}</h1>
             <div class="text-sm text-stone-600">{{ __('messages.category_' . \Illuminate\Support\Str::lower($product->category)) }}</div>
         </div>
         <div class="flex items-center gap-3">
-            <a href="{{ route('products.edit', $product) }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">{{ __('messages.products_actions_edit') }}</a>
+            @if (auth()->check() && in_array((string) auth()->user()->role, ['admin', 'staff'], true))
+                <a href="{{ route('products.edit', $product) }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">{{ __('messages.products_actions_edit') }}</a>
+            @endif
             <a href="{{ route('products.index') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">{{ __('messages.products_back') }}</a>
         </div>
     </div>
@@ -45,9 +47,10 @@
                         <div><span class="opacity-70">{{ __('messages.show_available') }}</span> <span class="font-semibold">{{ $product->is_available ? __('messages.products_yes') : __('messages.products_no') }}</span></div>
                     </div>
 
-                    @if ($product->description)
+                    @php($desc = $product->displayDescription())
+                    @if ($desc)
                         <div class="mt-4 text-sm"><span class="opacity-70">{{ __('messages.show_description') }}</span></div>
-                        <div class="mt-1 text-sm opacity-90">{{ $product->description }}</div>
+                        <div class="mt-1 text-sm opacity-90">{{ $desc }}</div>
                     @endif
 
                     @if ($product->image_url)
@@ -57,15 +60,17 @@
                         </div>
                     @endif
 
-                    <div class="mt-6">
-                        <form method="POST" action="{{ route('products.destroy', $product) }}" onsubmit="return confirm('{{ __('messages.products_delete_confirm') }}')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'bg-red-500/10 border border-red-500/30 hover:bg-red-500/15' : 'bg-red-50 border border-red-200 hover:bg-red-100' }}">
-                                {{ __('messages.products_actions_delete') }}
-                            </button>
-                        </form>
-                    </div>
+                    @if (auth()->check() && in_array((string) auth()->user()->role, ['admin', 'staff'], true))
+                        <div class="mt-6">
+                            <form method="POST" action="{{ route('products.destroy', $product) }}" onsubmit="return confirm('{{ __('messages.products_delete_confirm') }}')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'bg-red-500/10 border border-red-500/30 hover:bg-red-500/15' : 'bg-red-50 border border-red-200 hover:bg-red-100' }}">
+                                    {{ __('messages.products_actions_delete') }}
+                                </button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

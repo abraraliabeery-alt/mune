@@ -11,6 +11,8 @@ class OrderAdminController extends Controller
     public function index(Request $request)
     {
         $status = $request->string('status')->toString();
+        $q = trim($request->string('q')->toString());
+        $type = $request->string('type')->toString();
 
         $query = Order::query()->withCount('items')->orderByDesc('id');
 
@@ -18,9 +20,25 @@ class OrderAdminController extends Controller
             $query->where('status', $status);
         }
 
+        if ($type === 'delivery') {
+            $query->where('delivery_method', 'delivery');
+        } elseif ($type === 'table') {
+            $query->where('delivery_method', '!=', 'delivery');
+        }
+
+        if ($q !== '') {
+            $query->where(function ($sub) use ($q) {
+                $sub->where('public_code', 'like', "%{$q}%")
+                    ->orWhere('customer_name', 'like', "%{$q}%")
+                    ->orWhere('phone', 'like', "%{$q}%");
+            });
+        }
+
         return view('admin.orders.index', [
             'orders' => $query->paginate(20),
             'status' => $status,
+            'q' => $q,
+            'type' => $type,
         ]);
     }
 

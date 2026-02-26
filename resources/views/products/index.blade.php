@@ -8,7 +8,9 @@
             <h1 class="text-2xl font-semibold">{{ __('messages.products_title') }}</h1>
             <p class="text-sm opacity-75">{{ __('messages.products_subtitle') }}</p>
         </div>
-        <a href="{{ route('products.create') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">{{ __('messages.products_new') }}</a>
+        @if (auth()->check() && in_array((string) auth()->user()->role, ['admin', 'staff'], true))
+            <a href="{{ route('products.create') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">{{ __('messages.products_new') }}</a>
+        @endif
     </div>
 
     <div class="rounded-2xl p-4 sm:p-5 {{ $theme === 'dark' ? 'glass' : 'glass-light' }}">
@@ -28,15 +30,16 @@
                                     @endif
                                 </div>
                                 <div>
-                                    <div class="text-sm font-semibold tracking-wide">{{ $product->name }}</div>
+                                    <div class="text-sm font-semibold tracking-wide">{{ $product->displayName() }}</div>
                                     <div class="text-xs opacity-70">{{ __('messages.category_' . $catKey) }}</div>
                                 </div>
                             </div>
                             <div class="text-sm font-semibold tracking-wider">{{ number_format((float) $product->price, 2) }}</div>
                         </div>
 
-                        @if ($product->description)
-                            <div class="mt-3 text-xs opacity-75 line-clamp-2">{{ $product->description }}</div>
+                        @php($desc = $product->displayDescription())
+                        @if ($desc)
+                            <div class="mt-3 text-xs opacity-75 line-clamp-2">{{ $desc }}</div>
                         @endif
 
                         <div class="mt-4 flex items-center justify-between">
@@ -46,14 +49,16 @@
 
                             <div class="flex items-center gap-2 text-xs">
                                 <a class="px-3 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}" href="{{ route('products.show', $product) }}">{{ __('messages.products_actions_view') }}</a>
-                                <a class="px-3 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}" href="{{ route('products.edit', $product) }}">{{ __('messages.products_actions_edit') }}</a>
-                                <form method="POST" action="{{ route('products.destroy', $product) }}" onsubmit="return confirm('{{ __('messages.products_delete_confirm') }}')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="px-3 py-2 rounded-xl {{ $theme === 'dark' ? 'bg-red-500/10 border border-red-500/30 hover:bg-red-500/15' : 'bg-red-50 border border-red-200 hover:bg-red-100' }}">
-                                        {{ __('messages.products_actions_delete') }}
-                                    </button>
-                                </form>
+                                @if (auth()->check() && in_array((string) auth()->user()->role, ['admin', 'staff'], true))
+                                    <a class="px-3 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}" href="{{ route('products.edit', $product) }}">{{ __('messages.products_actions_edit') }}</a>
+                                    <form method="POST" action="{{ route('products.destroy', $product) }}" onsubmit="return confirm('{{ __('messages.products_delete_confirm') }}')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="px-3 py-2 rounded-xl {{ $theme === 'dark' ? 'bg-red-500/10 border border-red-500/30 hover:bg-red-500/15' : 'bg-red-50 border border-red-200 hover:bg-red-100' }}">
+                                            {{ __('messages.products_actions_delete') }}
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>
