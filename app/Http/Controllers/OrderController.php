@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LoyaltyAccount;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Services\CartService;
@@ -23,11 +24,17 @@ class OrderController extends Controller
             'order_type' => ['required', 'in:table,delivery'],
             'customer_name' => ['nullable', 'string', 'max:120'],
             'phone' => ['nullable', 'string', 'max:30'],
+            'loyalty_phone' => ['nullable', 'string', 'max:30'],
             'location_url' => ['nullable', 'string', 'max:500'],
             'notes' => ['nullable', 'string', 'max:1000'],
         ]);
 
         $tableNumber = $cart->tableNumber();
+
+        $loyaltyPhone = trim((string) ($validated['loyalty_phone'] ?? ''));
+        if ($loyaltyPhone === '') {
+            $loyaltyPhone = null;
+        }
 
         if (($validated['order_type'] ?? null) === 'table') {
             if (! $tableNumber) {
@@ -53,14 +60,36 @@ class OrderController extends Controller
             $validated['customer_name'] = $name;
             $validated['phone'] = $phone;
             $validated['location_url'] = $address;
+
+            if (! $loyaltyPhone) {
+                $loyaltyPhone = $phone;
+            }
         }
 
         $subtotal = $cart->subtotal();
 
-        $order = DB::transaction(function () use ($validated, $items, $subtotal, $tableNumber) {
+        $order = DB::transaction(function () use ($validated, $items, $subtotal, $tableNumber, $loyaltyPhone) {
             $publicCode = $this->generatePublicCode();
 
             $isDelivery = ($validated['order_type'] ?? null) === 'delivery';
+
+            $earnedPoints = 0;
+            $loyaltyPhoneToStore = null;
+            if ($loyaltyPhone) {
+                $loyaltyPhoneToStore = $loyaltyPhone;
+                $earnedPoints = (int) floor(((float) $subtotal) / 10);
+
+                if ($earnedPoints > 0) {
+                    $account = LoyaltyAccount::query()->firstOrCreate(
+                        ['phone' => $loyaltyPhoneToStore],
+                        ['points' => 0]
+                    );
+
+                    $account->update([
+                        'points' => ((int) $account->points) + $earnedPoints,
+                    ]);
+                }
+            }
 
             /** @var Order $order */
             $order = Order::query()->create([
@@ -70,6 +99,8 @@ class OrderController extends Controller
                 'location_url' => $isDelivery ? (string) ($validated['location_url'] ?? '') : null,
                 'table_number' => $isDelivery ? null : $tableNumber,
                 'public_code' => $publicCode,
+                'loyalty_phone' => $loyaltyPhoneToStore,
+                'loyalty_points' => $earnedPoints,
                 'notes' => $validated['notes'] ?? null,
                 'subtotal' => $subtotal,
                 'status' => 'new',

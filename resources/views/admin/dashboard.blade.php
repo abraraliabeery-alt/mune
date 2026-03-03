@@ -16,8 +16,25 @@
             <a href="{{ route('products.create') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">
                 {{ __('messages.admin_dashboard_add_product') }}
             </a>
+            @if (auth()->check() && (string) auth()->user()->role === 'admin')
+                <a href="{{ route('admin.staff.create') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">
+                    {{ __('messages.admin_dashboard_add_staff') }}
+                </a>
+                <a href="{{ route('admin.staff.index') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">
+                    {{ __('messages.admin_dashboard_users') }}
+                </a>
+            @endif
             <a href="{{ route('admin.orders.index') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">
                 {{ __('messages.admin_dashboard_orders') }}
+            </a>
+            <a href="{{ route('admin.loyalty.index') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">
+                {{ __('messages.admin_dashboard_loyalty') }}
+            </a>
+            <a href="{{ route('admin.works.index') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">
+                {{ __('messages.admin_works_title') }}
+            </a>
+            <a href="{{ route('admin.buffet.index') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">
+                {{ __('messages.admin_buffet_title') }}
             </a>
             <a href="{{ route('menu') }}" class="text-sm px-4 py-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">
                 {{ __('messages.nav_menu') }}

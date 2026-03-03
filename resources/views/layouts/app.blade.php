@@ -26,7 +26,7 @@
                 <nav class="flex items-center gap-2">
                     <a
                         href="{{ route('menu') }}"
-                        class="p-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}"
+                        class="px-3 py-2 rounded-xl inline-flex items-center gap-2 {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}"
                         aria-label="{{ __('messages.nav_menu') }}"
                         title="{{ __('messages.nav_menu') }}"
                     >
@@ -36,11 +36,41 @@
                             <path d="M14 10h7V3h-7v7Z" />
                             <path d="M3 21h7v-7H3v7Z" />
                         </svg>
+                        <span class="text-sm font-medium">{{ __('messages.nav_menu') }}</span>
+                    </a>
+
+                    <a
+                        href="{{ route('works.index') }}"
+                        class="px-3 py-2 rounded-xl inline-flex items-center gap-2 {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}"
+                        aria-label="{{ __('messages.nav_works') }}"
+                        title="{{ __('messages.nav_works') }}"
+                    >
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 5h16v14H4z" />
+                            <path d="M8 9h8" />
+                            <path d="M8 13h8" />
+                        </svg>
+                        <span class="text-sm font-medium">{{ __('messages.nav_works') }}</span>
+                    </a>
+
+                    <a
+                        href="{{ route('buffet.create') }}"
+                        class="px-3 py-2 rounded-xl inline-flex items-center gap-2 {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}"
+                        aria-label="{{ __('messages.nav_buffet') }}"
+                        title="{{ __('messages.nav_buffet') }}"
+                    >
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M7 6h10" />
+                            <path d="M7 10h10" />
+                            <path d="M7 14h10" />
+                            <path d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
+                        </svg>
+                        <span class="text-sm font-medium">{{ __('messages.nav_buffet') }}</span>
                     </a>
 
                     <a
                         href="{{ route('cart.index') }}"
-                        class="relative p-2 rounded-xl {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}"
+                        class="relative px-3 py-2 rounded-xl inline-flex items-center gap-2 {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}"
                         aria-label="{{ __('messages.nav_cart') }}"
                         title="{{ __('messages.nav_cart') }}"
                     >
@@ -49,6 +79,7 @@
                             <path d="M9 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
                             <path d="M18 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
                         </svg>
+                        <span class="text-sm font-medium">{{ __('messages.nav_cart') }}</span>
                         <span id="cart-count-badge" class="absolute -top-1 -right-1 min-w-5 h-5 px-1 inline-flex items-center justify-center text-[11px] rounded-full {{ $theme === 'dark' ? 'bg-amber-300/20 border border-amber-200/30 text-amber-100' : 'bg-amber-200 border border-amber-300 text-amber-900' }}">
                             {{ (int) $cartCount }}
                         </span>

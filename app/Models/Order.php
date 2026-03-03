@@ -13,6 +13,8 @@ class Order extends Model
         'location_url',
         'table_number',
         'public_code',
+        'loyalty_phone',
+        'loyalty_points',
         'notes',
         'subtotal',
         'status',

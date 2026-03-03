@@ -185,6 +185,19 @@
                             <div class="mt-3 text-xs opacity-60">{{ __('messages.orders_delivery_payment_note') }}</div>
                         </div>
 
+                        <div id="loyalty-fields" class="mt-3 {{ old('order_type', 'table') === 'table' ? '' : 'hidden' }}">
+                            <label class="text-xs opacity-70" for="loyalty_phone">{{ __('messages.loyalty_phone_optional') }}</label>
+                            <input
+                                id="loyalty_phone"
+                                name="loyalty_phone"
+                                type="text"
+                                inputmode="tel"
+                                value="{{ old('loyalty_phone') }}"
+                                class="mt-2 w-full px-3 py-2 rounded-xl text-sm {{ $theme === 'dark' ? 'bg-white/5 border border-white/10' : 'bg-white/80 border border-slate-900/10' }}"
+                            />
+                            <div class="mt-2 text-xs opacity-60">{{ __('messages.loyalty_phone_note') }}</div>
+                        </div>
+
                         <label class="text-xs opacity-70" for="order_notes">{{ __('messages.orders_notes') }}</label>
                         <textarea
                             id="order_notes"
@@ -224,6 +237,10 @@
                                 const selected = root.querySelector('input[name="order_type"]:checked');
                                 const isDelivery = selected && selected.value === 'delivery';
                                 delivery.classList.toggle('hidden', !isDelivery);
+                                const loyalty = root.querySelector('#loyalty-fields');
+                                if (loyalty) {
+                                    loyalty.classList.toggle('hidden', isDelivery);
+                                }
                             }
                             radios.forEach(r => r.addEventListener('change', sync));
                             sync();
