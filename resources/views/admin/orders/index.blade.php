@@ -66,6 +66,8 @@
                         <th class="py-2 pe-3">{{ __('messages.orders_type') }}</th>
                         <th class="py-2 pe-3">{{ __('messages.orders_table') }}</th>
                         <th class="py-2 pe-3">{{ __('messages.orders_status') }}</th>
+                        <th class="py-2 pe-3">{{ __('messages.admin_created_by') }}</th>
+                        <th class="py-2 pe-3">{{ __('messages.admin_updated_by') }}</th>
                         <th class="py-2 pe-3">{{ __('messages.admin_orders_items') }}</th>
                         <th class="py-2 pe-3">{{ __('messages.cart_subtotal') }}</th>
                         <th class="py-2">{{ __('messages.admin_orders_actions') }}</th>
@@ -78,6 +80,8 @@
                             <td class="py-3 pe-3">{{ (string) $order->delivery_method === 'delivery' ? __('messages.orders_type_delivery') : __('messages.orders_type_table') }}</td>
                             <td class="py-3 pe-3">{{ $order->table_number ?? '-' }}</td>
                             <td class="py-3 pe-3">{{ __('messages.orders_status_' . (string) $order->status) }}</td>
+                            <td class="py-3 pe-3">{{ $order->createdBy?->name ?? '—' }}</td>
+                            <td class="py-3 pe-3">{{ $order->updatedBy?->name ?? '—' }}</td>
                             <td class="py-3 pe-3">{{ (int) $order->items_count }}</td>
                             <td class="py-3 pe-3 font-semibold">{{ number_format((float) $order->subtotal, 2) }}</td>
                             <td class="py-3">

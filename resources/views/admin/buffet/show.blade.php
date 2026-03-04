@@ -35,6 +35,8 @@
                 <div><span class="opacity-70">{{ __('messages.buffet_company_name') }}:</span> {{ $buffet->company_name ?: '—' }}</div>
                 <div><span class="opacity-70">{{ __('messages.buffet_people_count') }}:</span> {{ $buffet->people_count ? (int) $buffet->people_count : '—' }}</div>
                 <div class="sm:col-span-2"><span class="opacity-70">{{ __('messages.buffet_event_at') }}:</span> {{ $buffet->event_at?->format('Y-m-d H:i') ?: '—' }}</div>
+                <div><span class="opacity-70">{{ __('messages.admin_created_by') }}:</span> {{ $buffet->createdBy?->name ?? '—' }}</div>
+                <div><span class="opacity-70">{{ __('messages.admin_updated_by') }}:</span> {{ $buffet->updatedBy?->name ?? '—' }}</div>
             </div>
 
             @if ($buffet->details)

@@ -38,6 +38,7 @@ class BuffetRequestController extends Controller
                 'details' => $validated['details'] ?? null,
                 'status' => 'new',
                 'created_by_user_id' => $request->user() ? $request->user()->id : null,
+                'updated_by_user_id' => $request->user() ? $request->user()->id : null,
             ]);
         });
 

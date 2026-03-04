@@ -15,7 +15,19 @@ class Work extends Model
         'cover_image_path',
         'is_published',
         'published_at',
+        'created_by_user_id',
+        'updated_by_user_id',
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by_user_id');
+    }
 
     public function media()
     {

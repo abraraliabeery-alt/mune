@@ -19,6 +19,7 @@ class BuffetRequest extends Model
         'quote_message',
         'quoted_at',
         'created_by_user_id',
+        'updated_by_user_id',
     ];
 
     protected $casts = [
@@ -29,5 +30,10 @@ class BuffetRequest extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by_user_id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by_user_id');
     }
 }

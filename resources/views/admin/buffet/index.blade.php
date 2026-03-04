@@ -58,6 +58,7 @@
                         <th class="py-2 pe-3">{{ __('messages.admin_buffet_people_count') }}</th>
                         <th class="py-2 pe-3">{{ __('messages.admin_buffet_status') }}</th>
                         <th class="py-2 pe-3">{{ __('messages.admin_buffet_created_by') }}</th>
+                        <th class="py-2 pe-3">{{ __('messages.admin_updated_by') }}</th>
                         <th class="py-2">{{ __('messages.admin_buffet_actions') }}</th>
                     </tr>
                 </thead>
@@ -77,6 +78,7 @@
                                     <span class="text-xs opacity-60">{{ __('messages.admin_buffet_created_by_customer') }}</span>
                                 @endif
                             </td>
+                            <td class="py-3 pe-3">{{ $r->updatedBy?->name ?? '—' }}</td>
                             <td class="py-3">
                                 <a href="{{ route('admin.buffet.show', ['buffet' => $r->id]) }}" class="px-3 py-2 rounded-xl text-sm {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">
                                     {{ __('messages.admin_buffet_view') }}

@@ -25,6 +25,14 @@
                     <div class="text-xs opacity-70">{{ __('messages.orders_type') }}</div>
                     <div class="mt-1 font-semibold">{{ (string) $order->delivery_method === 'delivery' ? __('messages.orders_type_delivery') : __('messages.orders_type_table') }}</div>
                 </div>
+                <div>
+                    <div class="text-xs opacity-70">{{ __('messages.admin_created_by') }}</div>
+                    <div class="mt-1 font-semibold">{{ $order->createdBy?->name ?? '—' }}</div>
+                </div>
+                <div>
+                    <div class="text-xs opacity-70">{{ __('messages.admin_updated_by') }}</div>
+                    <div class="mt-1 font-semibold">{{ $order->updatedBy?->name ?? '—' }}</div>
+                </div>
             </div>
 
             @if ((string) $order->delivery_method === 'delivery')

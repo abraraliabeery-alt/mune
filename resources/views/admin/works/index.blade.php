@@ -44,6 +44,8 @@
                         <th class="py-2 pe-3">{{ __('messages.admin_works_col_title') }}</th>
                         <th class="py-2 pe-3">{{ __('messages.admin_works_col_status') }}</th>
                         <th class="py-2 pe-3">{{ __('messages.admin_works_col_date') }}</th>
+                        <th class="py-2 pe-3">{{ __('messages.admin_created_by') }}</th>
+                        <th class="py-2 pe-3">{{ __('messages.admin_updated_by') }}</th>
                         <th class="py-2">{{ __('messages.admin_works_col_actions') }}</th>
                     </tr>
                 </thead>
@@ -55,6 +57,8 @@
                                 {{ $work->is_published ? __('messages.admin_works_published') : __('messages.admin_works_draft') }}
                             </td>
                             <td class="py-3 pe-3">{{ $work->published_at?->format('Y-m-d') }}</td>
+                            <td class="py-3 pe-3">{{ $work->createdBy?->name ?? '—' }}</td>
+                            <td class="py-3 pe-3">{{ $work->updatedBy?->name ?? '—' }}</td>
                             <td class="py-3">
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('admin.works.edit', ['work' => $work->id]) }}" class="px-3 py-2 rounded-xl text-sm {{ $theme === 'dark' ? 'chip hover:bg-white/10' : 'chip-light hover:bg-white/70' }}">

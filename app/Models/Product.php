@@ -19,7 +19,19 @@ class Product extends Model
         'description_ar',
         'image_url',
         'is_available',
+        'created_by_user_id',
+        'updated_by_user_id',
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by_user_id');
+    }
 
     public function displayName(?string $locale = null): string
     {

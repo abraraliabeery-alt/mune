@@ -14,7 +14,7 @@ class OrderAdminController extends Controller
         $q = trim($request->string('q')->toString());
         $type = $request->string('type')->toString();
 
-        $query = Order::query()->withCount('items')->orderByDesc('id');
+        $query = Order::query()->with(['createdBy', 'updatedBy'])->withCount('items')->orderByDesc('id');
 
         if ($status !== '') {
             $query->where('status', $status);
@@ -44,7 +44,7 @@ class OrderAdminController extends Controller
 
     public function show(Order $order)
     {
-        $order->load('items');
+        $order->load(['items', 'createdBy', 'updatedBy']);
 
         return view('admin.orders.show', [
             'order' => $order,
@@ -59,6 +59,7 @@ class OrderAdminController extends Controller
 
         $order->update([
             'status' => $validated['status'],
+            'updated_by_user_id' => $request->user()?->id,
         ]);
 
         return redirect()->route('admin.orders.show', ['order' => $order->id]);

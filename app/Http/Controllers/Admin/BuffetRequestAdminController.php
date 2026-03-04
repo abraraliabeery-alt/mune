@@ -13,7 +13,7 @@ class BuffetRequestAdminController extends Controller
         $q = trim($request->string('q')->toString());
         $status = trim($request->string('status')->toString());
 
-        $query = BuffetRequest::query()->with('createdBy')->orderByDesc('id');
+        $query = BuffetRequest::query()->with(['createdBy', 'updatedBy'])->orderByDesc('id');
 
         if ($status !== '') {
             $query->where('status', $status);
@@ -37,7 +37,7 @@ class BuffetRequestAdminController extends Controller
 
     public function show(Request $request, BuffetRequest $buffet)
     {
-        $buffet->load('createdBy');
+        $buffet->load(['createdBy', 'updatedBy']);
 
         return view('admin.buffet.show', [
             'buffet' => $buffet,
@@ -52,6 +52,7 @@ class BuffetRequestAdminController extends Controller
 
         $buffet->update([
             'status' => $validated['status'],
+            'updated_by_user_id' => $request->user()?->id,
         ]);
 
         return back()->with('status', __('messages.admin_buffet_saved'));
@@ -71,6 +72,7 @@ class BuffetRequestAdminController extends Controller
             'quote_message' => $validated['quote_message'] ?? null,
             'quoted_at' => $hasAny ? now() : null,
             'status' => $hasAny ? 'quoted' : $buffet->status,
+            'updated_by_user_id' => $request->user()?->id,
         ]);
 
         return back()->with('status', __('messages.admin_buffet_saved'));

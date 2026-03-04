@@ -15,7 +15,7 @@ class WorkAdminController extends Controller
     {
         $q = trim($request->string('q')->toString());
 
-        $query = Work::query()->orderByDesc('id');
+        $query = Work::query()->with(['createdBy', 'updatedBy'])->orderByDesc('id');
 
         if ($q !== '') {
             $query->where(function ($sub) use ($q) {
@@ -70,6 +70,8 @@ class WorkAdminController extends Controller
             'cover_image_path' => $coverPath,
             'is_published' => (bool) ($validated['is_published'] ?? false),
             'published_at' => (bool) ($validated['is_published'] ?? false) ? now() : null,
+            'created_by_user_id' => $request->user()?->id,
+            'updated_by_user_id' => $request->user()?->id,
         ]);
 
         $this->storeMedia($request, $work);
@@ -117,6 +119,7 @@ class WorkAdminController extends Controller
             'cover_image_path' => $work->cover_image_path,
             'is_published' => $isPublished,
             'published_at' => $isPublished ? ($work->published_at ?: now()) : null,
+            'updated_by_user_id' => $request->user()?->id,
         ]);
 
         $this->storeMedia($request, $work);

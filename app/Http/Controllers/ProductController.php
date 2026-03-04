@@ -17,7 +17,7 @@ class ProductController extends Controller
     {
         //
 
-        $products = Product::query()->orderByDesc('created_at')->paginate(10);
+        $products = Product::query()->with(['createdBy', 'updatedBy'])->orderByDesc('created_at')->paginate(10);
 
         return view('products.index', [
             'products' => $products,
@@ -66,6 +66,11 @@ class ProductController extends Controller
 
         $validated['name'] = (string) ($validated['name_en'] ?? '');
         $validated['description'] = (string) ($validated['description_en'] ?? '');
+
+        if ($request->user()) {
+            $validated['created_by_user_id'] = $request->user()->id;
+            $validated['updated_by_user_id'] = $request->user()->id;
+        }
 
         $product = Product::create($validated);
 
@@ -131,6 +136,10 @@ class ProductController extends Controller
 
         $validated['name'] = (string) ($validated['name_en'] ?? '');
         $validated['description'] = (string) ($validated['description_en'] ?? '');
+
+        if ($request->user()) {
+            $validated['updated_by_user_id'] = $request->user()->id;
+        }
 
         $product->update($validated);
 

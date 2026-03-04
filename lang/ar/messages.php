@@ -118,6 +118,9 @@ return [
     'admin_order_subtitle' => 'رقم: :id',
     'admin_order_update_status' => 'تحديث الحالة',
 
+    'admin_created_by' => 'أُضيف بواسطة',
+    'admin_updated_by' => 'عُدّل بواسطة',
+
     'products_title' => 'المنتجات',
     'products_subtitle' => 'إضافة وتعديل وإدارة المنتجات.',
     'products_new' => 'منتج جديد',

@@ -68,7 +68,7 @@ class OrderController extends Controller
 
         $subtotal = $cart->subtotal();
 
-        $order = DB::transaction(function () use ($validated, $items, $subtotal, $tableNumber, $loyaltyPhone) {
+        $order = DB::transaction(function () use ($validated, $items, $subtotal, $tableNumber, $loyaltyPhone, $request) {
             $publicCode = $this->generatePublicCode();
 
             $isDelivery = ($validated['order_type'] ?? null) === 'delivery';
@@ -104,6 +104,8 @@ class OrderController extends Controller
                 'notes' => $validated['notes'] ?? null,
                 'subtotal' => $subtotal,
                 'status' => 'new',
+                'created_by_user_id' => $request->user()?->id,
+                'updated_by_user_id' => $request->user()?->id,
             ]);
 
             foreach ($items as $item) {

@@ -118,6 +118,9 @@ return [
     'admin_order_subtitle' => 'ID: :id',
     'admin_order_update_status' => 'Update status',
 
+    'admin_created_by' => 'Created by',
+    'admin_updated_by' => 'Updated by',
+
     'products_title' => 'Products',
     'products_subtitle' => 'Create, edit, and manage products.',
     'products_new' => 'New Product',
